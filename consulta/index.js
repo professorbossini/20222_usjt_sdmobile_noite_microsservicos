@@ -4,6 +4,18 @@ const app = express()
 // app.use(bodyParser.json())
 app.use(express.json())
 
+const baseConsulta = {}
+
+const funcoes = {
+  LembreteCriado: (lembrete) => {
+    baseConsulta[lembrete.contador] = lembrete
+  },
+  ObservacaoCriada: (observacao) => {
+    const observacoes = baseConsulta[observacao.lembreteId]['observacoes'] || []
+    observacoes.push(observacao)
+    baseConsulta[observacao.lembreteId]['observacoes'] = observacoes
+  }
+}
 
 //localhost:6000/lembretes
 app.get('/lembretes', (req, res) => {
