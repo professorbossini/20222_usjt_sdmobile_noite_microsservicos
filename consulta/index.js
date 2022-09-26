@@ -14,6 +14,11 @@ const funcoes = {
     const observacoes = baseConsulta[observacao.lembreteId]['observacoes'] || []
     observacoes.push(observacao)
     baseConsulta[observacao.lembreteId]['observacoes'] = observacoes
+  },
+  ObservacaoAtualizada: (observacao) =>  {
+    const observacoes = baseConsulta[observacao.lembreteId]['observacoes']
+    const indice = observacoes.findIndex(o => o.id === observacao.id)
+    observacoes[indice] = observacao  
   }
 }
 
@@ -24,7 +29,12 @@ app.get('/lembretes', (req, res) => {
 
 //localhost:6000/eventos
 app.post('/eventos', (req, res) => {
-  funcoes[req.body.tipo](req.body.dados);
+  try{
+    funcoes[req.body.tipo](req.body.dados);
+  }catch(e){
+    console.log(req.body)
+    console.log(e)
+  }
   res.status(200).send(baseConsulta);
 })
 

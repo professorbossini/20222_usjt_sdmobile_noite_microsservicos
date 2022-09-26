@@ -18,8 +18,14 @@ const funcoes = {
 };
 
 app.post('/eventos', (req, res) => {
+  try{
     funcoes[req.body.tipo](req.body.dados);
-    res.status(200).send({msg: "ok"});
+  }
+  catch (ex){
+    console.log(ex)
+    console.log(req.body)
+  }
+  res.status(200).send({msg: "ok"});
 });
 
 app.listen(7000, () => console.log("Classificação. Porta 7000"));

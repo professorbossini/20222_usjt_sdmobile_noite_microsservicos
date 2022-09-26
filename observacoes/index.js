@@ -14,7 +14,7 @@ const funcoes = {
     ObservacaoClassificada: (observacao) => {
         const observacoes = 
             observacoesPorLembreteId[observacao.lembreteId];
-        const obsParaAtualizar = observacoes.find(o => o.id === observacao.id);
+        let obsParaAtualizar = observacoes.find(o => o.id === observacao.id);
         obsParaAtualizar = observacao.status;
         axios.post('http://localhost:10000/eventos', {
             tipo: "ObservacaoAtualizada",
@@ -55,8 +55,14 @@ app.get('/lembretes/:id/observacoes', (req, res) => {
 })
 
 app.post('/eventos', (req, res) => {
-    funcoes[req.body.tipo](req.body.dados);
-    res.status(200).send({msg: 'ok'});
-  })
+  try{
+    funcoes[req.body.tipo](req.body.dados);  
+  }
+  catch (ex){
+    console.log(ex)
+    console.log(req.body)
+  }
+  res.status(200).send({msg: 'ok'})
+})
   
 app.listen(5000, () => console.log('Observações. Porta 5000.'))
