@@ -16,7 +16,7 @@ const funcoes = {
             observacoesPorLembreteId[observacao.lembreteId];
         let obsParaAtualizar = observacoes.find(o => o.id === observacao.id);
         obsParaAtualizar = observacao.status;
-        axios.post('http://localhost:10000/eventos', {
+        axios.post('http://192.168.15.7:10000/eventos', {
             tipo: "ObservacaoAtualizada",
             dados: {
                 id: observacao.id,
@@ -28,7 +28,7 @@ const funcoes = {
     }
 }
 
-//localhost:5000/lembretes/123456/observacoes
+//192.168.15.7:5000/lembretes/123456/observacoes
 app.post('/lembretes/:id/observacoes', async (req, res) => {
     const idObs = uuidv4();
     const { texto } = req.body;
@@ -37,7 +37,7 @@ app.post('/lembretes/:id/observacoes', async (req, res) => {
         observacoesPorLembreteId[req.params.id] || [];
     observacoesDoLembrete.push({id: idObs, texto, status: 'aguardando'});
     observacoesPorLembreteId[req.params.id] = observacoesDoLembrete;
-    await axios.post('http://localhost:10000/eventos', {
+    await axios.post('http://192.168.15.7:10000/eventos', {
         tipo: 'ObservacaoCriada',
         dados: {
             id: idObs,
@@ -49,7 +49,7 @@ app.post('/lembretes/:id/observacoes', async (req, res) => {
     res.status(201).send(observacoesDoLembrete);
 })
 
-//localhost:5000/lembretes/abcd/observacoes
+//192.168.15.7:5000/lembretes/abcd/observacoes
 app.get('/lembretes/:id/observacoes', (req, res) => {
     res.send(observacoesPorLembreteId[req.params.id] || []);
 })

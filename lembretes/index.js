@@ -9,20 +9,20 @@ const lembretes = {}
 let contador = 0
 
 //GET obter a lista de lembretes
-//localhost:4000/lembretes
+//192.168.15.7:4000/lembretes
 app.get('/lembretes', (req, res) => {
   res.send(lembretes)
 })
 
 //POST cadastrar um lembrete novo
-//localhost:4000/lembretes
+//192.168.15.7:4000/lembretes
 // {texto: 'Fazer café'}
 app.post('/lembretes', async (req, res) => {
   contador++
   // const texto = req.body.texto  
   const { texto } = req.body;
   lembretes[contador] = {contador, texto};
-  await axios.post("http://localhost:10000/eventos", {
+  await axios.post("http://192.168.15.7:10000/eventos", {
     tipo: "LembreteCriado",
     dados: {
       contador,
