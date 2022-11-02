@@ -22,7 +22,7 @@ app.post('/lembretes', async (req, res) => {
   // const texto = req.body.texto  
   const { texto } = req.body;
   lembretes[contador] = {contador, texto};
-  await axios.post("http://192.168.15.7:10000/eventos", {
+  await axios.post("http://barramento-de-eventos-service:10000/eventos", {
     tipo: "LembreteCriado",
     dados: {
       contador,
@@ -37,4 +37,8 @@ app.post('/eventos', (req, res) => {
   res.status(200).send({msg: 'ok'});
 })
 
-app.listen(4000, () => console.log ('Lembretes. Porta 4000'))
+app.listen(4000, () => {
+  console.log('Nova versão');
+  console.log('Chamando barramento-de-eventos-service');
+  console.log ('Lembretes. Porta 4000');
+});

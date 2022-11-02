@@ -42,7 +42,7 @@ app.post('/eventos', (req, res) => {
 app.listen('6000', async () => {
   console.log('Consultas. Porta 6000.')
   try{
-    const resp = await axios.get('http://192.168.15.7:10000/eventos')
+    const resp = await axios.get('http://barramento-de-eventos-service:10000/eventos')
     resp.data.forEach((valor, indice, colecao) => {
       try{
         funcoes[valor.tipo](valor.dados)
